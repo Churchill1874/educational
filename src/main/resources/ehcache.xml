@@ -15,6 +15,7 @@
             <heap unit="entries">50</heap>
         </resources>
     </cache>
+<!--
 
     <cache alias="admin_token">
         <key-type>java.lang.String</key-type>
@@ -48,6 +49,7 @@
             <heap unit="entries">3000</heap>
         </resources>
     </cache>
+-->
 
     <cache alias="lock_3_second">
         <key-type>java.lang.String</key-type>

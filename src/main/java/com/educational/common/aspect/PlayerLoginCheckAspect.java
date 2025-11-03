@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
-public class PlayerLoginCheck {
+public class PlayerLoginCheckAspect {
 
     //定位切面的目标 是一个注解
     @Pointcut("@annotation(com.educational.common.annotation.PlayerLoginCheck)")

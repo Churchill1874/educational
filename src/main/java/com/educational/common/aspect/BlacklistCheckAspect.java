@@ -1,7 +1,5 @@
 package com.educational.common.aspect;
 
-import com.educational.common.exception.IpException;
-import com.educational.common.tools.HttpTools;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -9,12 +7,10 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Set;
-
 @Slf4j
 @Aspect
 @Component
-public class BlacklistAspect {
+public class BlacklistCheckAspect {
 
     @Autowired
     //private BlacklistService blacklistService;

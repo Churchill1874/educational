@@ -1,6 +1,5 @@
 package com.educational.common.aspect;
 
-import com.educational.common.tools.TokenTools;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -11,22 +10,17 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Aspect
 @Component
-public class AdminLoginCheck {
+public class SuperAdminCheckAspect {
 
     //定位切面的目标 是一个注解
-    @Pointcut("@annotation(com.educational.common.annotation.AdminLoginCheck)")
-    public void adminLoginCheck() {
+    @Pointcut("@annotation(com.educational.common.annotation.SuperAdminLoginCheck)")
+    public void superAdminLoginCheck() {
 
     }
 
-    @Before("adminLoginCheck()")
+    @Before("superAdminLoginCheck()")
     public void beforeCut(JoinPoint joinPoint) {
     }
-
-/*    @After("loginCheck()")
-    public void afterCut(){
-
-    }*/
 
 
 }
