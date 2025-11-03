@@ -33,7 +33,7 @@ public class PlayerInfoResp implements Serializable {
     @ApiModelProperty("生日")
     private LocalDate birth;
     @ApiModelProperty("等级")
-    private LevelEnum level;
+    private Integer level;
     @ApiModelProperty("自我介绍")
     private String selfIntroduction;
     @ApiModelProperty("是否机器人")
@@ -64,6 +64,4 @@ public class PlayerInfoResp implements Serializable {
     private Boolean collected;
     @ApiModelProperty("ip")
     private String ip;
-    @ApiModelProperty("阵营")
-    private CampEnum campType;
 }

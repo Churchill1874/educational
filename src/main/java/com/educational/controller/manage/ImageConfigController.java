@@ -30,17 +30,15 @@ public class ImageConfigController {
 
     @Autowired
     private ImageConfigService imageConfigService;
-    @Autowired
-    private UploadRecordService uploadRecordService;
 
     @PostMapping("/add")
     @ApiOperation(value = "图片添加", notes = "图片添加")
     @AdminLoginCheck
     public R add(@RequestBody @Valid ImageConfigAddReq req) {
-        ImageConfig imageConfig = BeanUtil.toBean(req, ImageConfig.class);
+/*        ImageConfig imageConfig = BeanUtil.toBean(req, ImageConfig.class);
         imageConfig.setCreateTime(LocalDateTime.now());
         imageConfig.setCreateName(TokenTools.getAdminToken(true).getName());
-        imageConfigService.add(imageConfig);
+        imageConfigService.add(imageConfig);*/
         return R.ok(null);
     }
 
@@ -48,12 +46,12 @@ public class ImageConfigController {
     @ApiOperation(value = "图片修改", notes = "图片修改")
     @AdminLoginCheck
     public R update(@RequestBody @Valid ImageConfigUpdateBase req) {
-        ImageConfig imageConfig = imageConfigService.getById(req.getId());
+    /*    ImageConfig imageConfig = imageConfigService.getById(req.getId());
         imageConfig.setSort(req.getSort());
         imageConfig.setStatus(req.getStatus());
         imageConfig.setUpdateName(TokenTools.getAdminToken(true).getName());
         imageConfig.setUpdateTime(LocalDateTime.now());
-        imageConfigService.updateById(imageConfig);
+        imageConfigService.updateById(imageConfig);*/
         return R.ok(null);
     }
 

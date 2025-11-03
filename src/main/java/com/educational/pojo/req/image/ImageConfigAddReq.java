@@ -28,9 +28,6 @@ public class ImageConfigAddReq implements Serializable {
     @ApiModelProperty(value = "使用状态", required = true)
     private Boolean status;
 
-    @ApiModelProperty("新闻类型")
-    private InfoEnum newsType;
-
     @ApiModelProperty("新闻Id")
     private Long newsId;
 

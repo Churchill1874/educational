@@ -21,7 +21,6 @@ public class AdminLoginCheck {
 
     @Before("adminLoginCheck()")
     public void beforeCut(JoinPoint joinPoint) {
-        TokenTools.getAdminToken(true);
     }
 
 /*    @After("loginCheck()")

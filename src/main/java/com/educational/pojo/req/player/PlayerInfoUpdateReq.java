@@ -40,7 +40,7 @@ public class PlayerInfoUpdateReq implements Serializable {
     private LocalDate birth;
 
     @ApiModelProperty(value = "等级", required = false)
-    private LevelEnum level;
+    private Integer level;
 
     @ApiModelProperty(value = "自我介绍", required = false)
     private String selfIntroduction;

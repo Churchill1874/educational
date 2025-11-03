@@ -5,9 +5,6 @@ import com.educational.common.exception.DataException;
 import com.educational.common.exception.IpException;
 import com.educational.common.tools.GenerateTools;
 import com.educational.common.tools.HttpTools;
-import com.educational.entity.Blacklist;
-import com.educational.pojo.resp.admin.AdminTokenResp;
-import com.educational.pojo.resp.news.HomeResp;
 import com.educational.pojo.resp.player.PlayerInfoResp;
 import com.educational.pojo.resp.player.PlayerTokenResp;
 import com.educational.service.EhcacheService;
@@ -29,8 +26,6 @@ import java.util.Set;
 public class EhcacheServiceImpl implements EhcacheService {
 
     @Autowired
-    private BlacklistService blacklistService;
-    @Autowired
     private CacheManager cacheManager;
 
     @Override
@@ -42,18 +37,6 @@ public class EhcacheServiceImpl implements EhcacheService {
         if (reqCount != null) {
             if (reqCount >= limitCount) {
                 //如果ip存在黑名单就更新时间
-                Blacklist blacklist = blacklistService.findByIp(ip);
-                if (blacklist != null) {
-                    blacklist.setUpdateTime(LocalDateTime.now());
-                    blacklist.setUpdateName("系统");
-                    blacklistService.updateById(blacklist);
-                } else { //否则就新增
-                    blacklist = new Blacklist();
-                    blacklist.setIp(ip);
-                    blacklist.setRemarks(remarks);
-                    blacklist.setCreateName("系统");
-                    blacklistService.insert(blacklist);
-                }
                 throw new IpException(ip);
             } else {
                 cache.put(ip, reqCount + 1);
@@ -82,10 +65,6 @@ public class EhcacheServiceImpl implements EhcacheService {
         return cacheManager.getCache(CacheKeyConstant.VERIFICATION_CODE, String.class, String.class);
     }
 
-    @Override
-    public Cache<String, AdminTokenResp> adminTokenCache() {
-        return cacheManager.getCache(CacheKeyConstant.ADMIN_TOKEN, String.class, AdminTokenResp.class);
-    }
 
     @Override
     public Cache<String, PlayerTokenResp> playerTokenCache() {
@@ -107,10 +86,6 @@ public class EhcacheServiceImpl implements EhcacheService {
         return cacheManager.getCache(CacheKeyConstant.PLAYER_ONLINE_COUNT, String.class, Integer.class);
     }
 
-    @Override
-    public Cache<String, HomeResp> homeCache() {
-        return cacheManager.getCache(CacheKeyConstant.HOME_DATA, String.class, HomeResp.class);
-    }
 
 /*    @Override
     public Cache<String, HomeNewsResp> homeNewsCache() {

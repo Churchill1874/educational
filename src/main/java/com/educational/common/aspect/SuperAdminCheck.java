@@ -2,7 +2,6 @@ package com.educational.common.aspect;
 
 import com.educational.common.exception.AuthException;
 import com.educational.common.tools.TokenTools;
-import com.educational.pojo.resp.admin.AdminTokenResp;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,10 +22,6 @@ public class SuperAdminCheck {
 
     @Before("superAdminLoginCheck()")
     public void beforeCut(JoinPoint joinPoint) {
-        AdminTokenResp adminTokenResp = TokenTools.getAdminToken(true);
-        if (adminTokenResp.getRole() != ManageRoleEnum.SUPER_ADMIN) {
-            throw new AuthException();
-        }
     }
 
 

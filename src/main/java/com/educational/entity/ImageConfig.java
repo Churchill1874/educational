@@ -28,9 +28,6 @@ public class ImageConfig extends UpdateBaseInfo implements Serializable {
     @ApiModelProperty("描述")
     private String description;
 
-    @ApiModelProperty("新闻类型")
-    private InfoEnum newsType;
-
     @ApiModelProperty("新闻Id")
     private Long newsId;
 

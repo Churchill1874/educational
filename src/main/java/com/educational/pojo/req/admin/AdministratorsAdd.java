@@ -11,10 +11,6 @@ import java.io.Serializable;
 public class AdministratorsAdd implements Serializable {
     private static final long serialVersionUID = -8328317163525683573L;
 
-    @NotNull(message = "角色不能为空")
-    @ApiModelProperty(value = "角色", required = true)
-    private ManageRoleEnum role;
-
     @NotBlank(message = "密码不能为空")
     @ApiModelProperty(value = "密码", required = true)
     private String password;

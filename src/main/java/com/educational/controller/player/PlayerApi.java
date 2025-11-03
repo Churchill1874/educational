@@ -14,7 +14,6 @@ import com.educational.entity.PlayerToken;
 import com.educational.pojo.req.IdBase;
 import com.educational.pojo.req.player.PersonalInfoUpdateReq;
 import com.educational.pojo.req.player.PlayerLoginReq;
-import com.educational.pojo.req.player.PlayerRegisterReq;
 import com.educational.pojo.resp.player.PlayerInfoResp;
 import com.educational.pojo.resp.player.PlayerTokenResp;
 import io.swagger.annotations.Api;
@@ -44,58 +43,6 @@ public class PlayerApi {
     private PlayerHelper playerHelper;
     @Autowired
     private EhcacheService ehcacheService;
-    @Autowired
-
-    @PostMapping("/playerInfo")
-    @ApiOperation(value = "玩家信息", notes = "玩家信息")
-    public R<PlayerInfoResp> playerInfo() {
-        Long playerId = TokenTools.getPlayerToken(true).getId();
-        PlayerInfoResp playerInfoResp = ehcacheService.playerInfoCache().get(playerId.toString());
-        if (playerInfoResp != null) {
-            return R.ok(playerInfoResp);
-        }
-
-        PlayerInfo playerInfo = playerInfoService.getById(playerId);
-        playerInfoResp = BeanUtil.toBean(playerInfo, PlayerInfoResp.class);
-        ehcacheService.playerInfoCache().put(playerId.toString(), playerInfoResp);
-
-        return R.ok(playerInfoResp);
-    }
-
-    @PostMapping("/register")
-    @ApiOperation(value = "注册", notes = "注册")
-    public R<PlayerTokenResp> register(@RequestBody @Valid PlayerRegisterReq req) {
-        log.info("玩家注册入参:{}", JSONUtil.toJsonStr(req));
-        checkVerificationCode(req.getVerificationCode());
-
-        CheckReqTools.account(req.getAccount());
-        CheckReqTools.name(req.getName());
-        CheckReqTools.password(req.getPassword());
-
-        String salt = GenerateTools.getUUID();
-
-        PlayerInfo playerInfo = new PlayerInfo();
-        playerInfo.setIsBot(false);
-        playerInfo.setAccount(req.getAccount());
-        playerInfo.setName(req.getName());
-        playerInfo.setPassword(CodeTools.md5AndSalt(req.getPassword(), salt));
-        playerInfo.setSalt(salt);
-        playerInfo.setPhone(req.getPhone());
-        playerInfo.setCreateName("玩家");
-        playerInfo.setCreateTime(LocalDateTime.now());
-        playerInfo.setBirth(req.getBirth());
-        playerInfo.setGender(req.getGender());
-        playerInfo.setLevel(0);
-        playerInfo.setStatus(UserStatusEnum.NORMAL);
-        playerInfo.setAvatarPath("1");
-        playerInfo.setBalance(BigDecimal.ZERO);
-        playerInfo.setAddress(HttpTools.getAddress());
-        playerInfoService.add(playerInfo);
-
-        PlayerTokenResp playerTokenResp = playerHelper.createLoginToken(playerInfo);
-        playerTokenService.addOrUpdate(playerInfo.getId(), playerTokenResp.getTokenId());
-        return R.ok(playerTokenResp);
-    }
 
 
     //校验验证码

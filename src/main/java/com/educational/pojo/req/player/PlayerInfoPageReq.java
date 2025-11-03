@@ -37,7 +37,7 @@ public class PlayerInfoPageReq extends PageBase implements Serializable {
     private LocalDate birth;
 
     @ApiModelProperty("等级")
-    private LevelEnum level;
+    private Integer level;
 
     @ApiModelProperty("是否机器人")
     private Boolean isBot;

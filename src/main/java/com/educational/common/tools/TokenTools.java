@@ -3,7 +3,6 @@ package com.educational.common.tools;
 import cn.hutool.core.util.RandomUtil;
 import com.educational.common.constant.CacheKeyConstant;
 import com.educational.common.exception.TokenException;
-import com.educational.pojo.resp.admin.AdminTokenResp;
 import com.educational.pojo.resp.player.PlayerTokenResp;
 import com.educational.service.EhcacheService;
 import com.educational.service.PlayerHelper;
@@ -34,32 +33,7 @@ public class TokenTools {
         TokenTools.playerHelper = playerHelper;
     }
 
-    /**
-     * 获取管理员登录信息
-     *
-     * @return
-     */
-    public static AdminTokenResp getAdminToken(boolean needCheck) {
-        String headerToken = HttpTools.getHeaderToken();
-        if (StringUtils.isBlank(headerToken)) {
-            //如果要求在请求头里的token-id不能为空 要校验令牌
-            if (needCheck) {
-                throw new TokenException();
-            } else {
-                return null;
-            }
-        }
 
-        AdminTokenResp adminTokenResp = ehcacheService.adminTokenCache().get(headerToken);
-        if (adminTokenResp == null) {
-            throw new TokenException();
-        }
-        return adminTokenResp;
-    }
-
-    public static String getAdminName() {
-        return getAdminToken(true).getName();
-    }
 
     /**
      * 获取管理员登录信息

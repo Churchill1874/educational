@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Slf4j
 @Service
 public class ImageConfigServiceImpl extends ServiceImpl<ImageConfigMapper, ImageConfig> implements ImageConfigService {
-    @Autowired
-    private UploadRecordService uploadRecordService;
     @Override
     public IPage<ImageConfig> queryPage(ImageConfigPageReq po) {
         IPage<ImageConfig> iPage = new Page<>(po.getPageNum(), po.getPageSize());
@@ -33,7 +31,6 @@ public class ImageConfigServiceImpl extends ServiceImpl<ImageConfigMapper, Image
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void add(ImageConfig imageConfig) {
-        uploadRecordService.cleanByPath(imageConfig.getPath());
         save(imageConfig);
     }
 
@@ -44,7 +41,6 @@ public class ImageConfigServiceImpl extends ServiceImpl<ImageConfigMapper, Image
         if (imageConfig == null){
             throw new DataException("图片未找到");
         }
-        uploadRecordService.cleanRemoveFile(imageConfig.getPath());
         removeById(id);
     }
 

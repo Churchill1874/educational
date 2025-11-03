@@ -40,6 +40,6 @@ public class PersonalInfoUpdateReq implements Serializable {
     private LocalDate birth;
 
     @ApiModelProperty("阵营")
-    private CampEnum campType;
+    private Integer campType;
 
 }

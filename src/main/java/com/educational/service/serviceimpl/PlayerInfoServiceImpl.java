@@ -27,10 +27,6 @@ import java.util.stream.Collectors;
 @Service
 public class PlayerInfoServiceImpl extends ServiceImpl<PlayerInfoMapper, PlayerInfo> implements PlayerInfoService {
 
-    @Autowired
-    private InteractiveStatisticsService interactiveStatisticsService;
-
-
     @Override
     public IPage<PlayerInfo> queryPage(PlayerInfo playerInfo, PageBase pageBase) {
         IPage<PlayerInfo> iPage = new Page<>(pageBase.getPageNum(), pageBase.getPageSize());
@@ -62,10 +58,6 @@ public class PlayerInfoServiceImpl extends ServiceImpl<PlayerInfoMapper, PlayerI
 
         save(playerInfo);
 
-        InteractiveStatistics interactiveStatistics = interactiveStatisticsService.findByPlayerId(playerInfo.getId());
-        if (interactiveStatistics == null) {
-            throw new DataException("刚刚网络繁忙,请稍后再次请求");
-        }
 
     }
 
