@@ -1,0 +1,108 @@
+package com.educational.service;
+
+import com.educational.pojo.resp.admin.AdminTokenResp;
+import com.educational.pojo.resp.news.HomeResp;
+import com.educational.pojo.resp.player.PlayerInfoResp;
+import com.educational.pojo.resp.player.PlayerTokenResp;
+import org.ehcache.Cache;
+
+import java.util.Set;
+
+/**
+ * 缓存服务
+ */
+public interface EhcacheService {
+
+
+    /**
+     * 获取3秒锁缓存容器
+     * @return
+     */
+    Cache<String, Integer> lock3SecondCache();
+
+    /**
+     * 校验过快操作
+     * @param key
+     */
+    void verification3SecondsRequest(String key);
+
+
+    /**
+     * 获取验证码缓存容器
+     * @return
+     */
+    Cache<String, String> verificationCache();
+
+
+    /**
+     * 获取管理员登录token缓存容器
+     * @return
+     */
+    Cache<String, AdminTokenResp> adminTokenCache();
+
+    /**
+     * 获取玩家token缓存容器
+     * @return
+     */
+    Cache<String, PlayerTokenResp> playerTokenCache();
+
+    /**
+     * 玩家详细信息缓存容器
+     * @return
+     */
+    Cache<String, PlayerInfoResp> playerInfoCache();
+
+    /**
+     * 获取真实在线人数缓存容器
+     * @return
+     */
+    Cache<String, PlayerTokenResp> onlineCountCache();
+
+    /**
+     * 获取随机在线人数缓存
+     * @return
+     */
+    Cache<String, Integer> playerOnlineCount();
+
+    /**
+     * 首页新闻
+     * @return
+     */
+    //Cache<String, HomeNewsResp> homeNewsCache();
+
+
+    /**
+     * 首页数据
+     * @return
+     */
+    Cache<String, HomeResp> homeCache();
+
+    /**
+     * 获取验证码 并设置每3秒的限制请求次数 和提示语
+     * @param limitCount
+     * @param remarks
+     * @return
+     */
+    String getVC(String key, Integer limitCount, String remarks);
+
+    /**
+     * 校验ip 3秒内频繁点击超过指定次数
+     *
+     * @param limitCount
+     * @return
+     */
+    void checkIp3SecondsClick(Integer limitCount, String remarks);
+
+    /**
+     * 获取黑名单ip集合set
+     * @return
+     */
+    Set<String> getBlacklistIpSetCache();
+
+    /**
+     * 更新设置黑名单ip集合set
+     * @return
+     */
+    void setBlacklistIpSetCache(Set<String> blacklistIpSet);
+
+}
