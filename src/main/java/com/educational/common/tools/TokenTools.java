@@ -5,7 +5,6 @@ import com.educational.common.constant.CacheKeyConstant;
 import com.educational.common.exception.TokenException;
 import com.educational.pojo.resp.player.PlayerTokenResp;
 import com.educational.service.EhcacheService;
-import com.educational.service.PlayerHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.ehcache.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +26,6 @@ public class TokenTools {
     }
 
 
-    private static PlayerHelper playerHelper;
-    @Autowired
-    public void setPlayerHelper(PlayerHelper playerHelper){
-        TokenTools.playerHelper = playerHelper;
-    }
-
 
 
     /**
@@ -40,6 +33,7 @@ public class TokenTools {
      *
      * @return
      */
+/*
     public static PlayerTokenResp getPlayerToken(boolean needCheck) {
         String headerToken = HttpTools.getHeaderToken();
         if (StringUtils.isBlank(headerToken)) {
@@ -63,6 +57,7 @@ public class TokenTools {
         }
         return playerTokenResp;
     }
+*/
 
     /**
      * 获取当前在线人数 随机生成

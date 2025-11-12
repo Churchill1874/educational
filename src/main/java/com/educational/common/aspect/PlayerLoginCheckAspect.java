@@ -24,10 +24,10 @@ public class PlayerLoginCheckAspect {
 
     @Before("playerLoginCheck()")
     public void beforeCut(JoinPoint joinPoint) {
-        PlayerTokenResp playerToken = TokenTools.getPlayerToken(true);
+/*        PlayerTokenResp playerToken = TokenTools.getPlayerToken(true);
         if (playerToken.getStatus() == null || playerToken.getStatus() == UserStatusEnum.DISABLE) {
             throw new AuthException();
-        }
+        }*/
     }
 
 /*    @After("loginCheck()")
