@@ -17,7 +17,7 @@
 
     <cache alias="admin_token">
         <key-type>java.lang.String</key-type>
-        <value-type>com.educational.pojo.resp.admin.AdminTokenResp</value-type>
+        <value-type>com.educational.entity.Admin</value-type>
         <expiry>
             <ttl unit="days">1</ttl>
         </expiry>
@@ -69,17 +69,6 @@
         </expiry>
         <resources>
             <heap unit="entries">1</heap>
-        </resources>
-    </cache>
-
-    <cache alias="online_count">
-        <key-type>java.lang.String</key-type>
-        <value-type>com.educational.pojo.resp.player.PlayerTokenResp</value-type>
-        <expiry>
-            <ttl unit="seconds">1800</ttl>
-        </expiry>
-        <resources>
-            <heap unit="entries">1000</heap>
         </resources>
     </cache>
 
