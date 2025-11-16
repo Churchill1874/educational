@@ -4,12 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.educational.common.tools.GenerateTools;
 import com.educational.entity.Admin;
 import com.educational.mapper.AdminMapper;
 import com.educational.pojo.req.admin.AdminPage;
 import com.educational.service.AdminService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 
 @Service
 public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements AdminService {
@@ -27,7 +30,14 @@ public class AdminServiceImpl extends ServiceImpl<AdminMapper, Admin> implements
         return page(page, queryWrapper);
     }
 
-
+    @Override
+    public Admin findByAccount(String account) {
+        QueryWrapper<Admin> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .lambda()
+                .eq(Admin::getAccount, account);
+        return getOne(queryWrapper);
+    }
 
 
 }

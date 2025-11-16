@@ -43,17 +43,6 @@ public class GenerateTools {
         return UUID.randomUUID().toString().replace("-", "");
     }
 
-
-    /**
-     * 创建tokenId
-     *
-     * @return
-     */
-    public static String createTokenId() {
-        return UUID.randomUUID().toString().replace("-", "");
-    }
-
-
     /**
      * 随机出来几位验证码值
      * @param captchaLength

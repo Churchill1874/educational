@@ -9,4 +9,6 @@ public interface AdminService extends IService<Admin> {
 
     IPage<Admin> page(AdminPage dto);
 
+    Admin findByAccount(String account);
+
 }

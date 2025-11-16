@@ -1,6 +1,5 @@
 package com.educational.config.websocket;
 
-import com.educational.pojo.resp.player.PlayerTokenResp;
 import com.educational.service.EhcacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
@@ -20,7 +19,7 @@ public class CustomPrincipalHandshakeHandler extends DefaultHandshakeHandler {
     @Override
     protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
         // 从 attributes 中取出 Token
-        String token = (String) attributes.get("token-id");
+/*        String token = (String) attributes.get("token-id");
 
         // 如果没有 token，可返回 null 或做其它处理
         if (token == null) {
@@ -31,10 +30,12 @@ public class CustomPrincipalHandshakeHandler extends DefaultHandshakeHandler {
         log.info("握手中提取 token-id={}, playerTokenResp={}", token, playerTokenResp);
         if (playerTokenResp == null){
             return null;
-        }
+        }*/
 
         // 用 token 构造自定义 Principal
-        return new StompPrincipal(playerTokenResp.getId().toString());
+        //return new StompPrincipal(playerTokenResp.getId().toString());
+
+        return null;
     }
 
 }

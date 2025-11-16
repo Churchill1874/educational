@@ -1,7 +1,6 @@
 package com.educational.service;
 
-import com.educational.pojo.resp.player.PlayerInfoResp;
-import com.educational.pojo.resp.player.PlayerTokenResp;
+import com.educational.entity.Admin;
 import org.ehcache.Cache;
 
 import java.util.Set;
@@ -11,6 +10,12 @@ import java.util.Set;
  */
 public interface EhcacheService {
 
+
+    /**
+     * 获取管理员登录缓存
+     * @return
+     */
+    Cache<String, Admin>  getAdminTokenCache();
 
     /**
      * 获取3秒锁缓存容器
@@ -30,26 +35,6 @@ public interface EhcacheService {
      * @return
      */
     Cache<String, String> verificationCache();
-
-
-
-    /**
-     * 获取玩家token缓存容器
-     * @return
-     */
-    Cache<String, PlayerTokenResp> playerTokenCache();
-
-    /**
-     * 玩家详细信息缓存容器
-     * @return
-     */
-    Cache<String, PlayerInfoResp> playerInfoCache();
-
-    /**
-     * 获取真实在线人数缓存容器
-     * @return
-     */
-    Cache<String, PlayerTokenResp> onlineCountCache();
 
     /**
      * 获取随机在线人数缓存

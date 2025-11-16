@@ -3,8 +3,6 @@
         xmlns='http://www.ehcache.org/v3'
         xsi:schemaLocation="http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.0.xsd">
 
-
-
     <cache alias="verification_code">
         <key-type>java.lang.String</key-type>
         <value-type>java.lang.String</value-type>
@@ -15,7 +13,7 @@
             <heap unit="entries">50</heap>
         </resources>
     </cache>
-<!--
+
 
     <cache alias="admin_token">
         <key-type>java.lang.String</key-type>
@@ -24,10 +22,11 @@
             <ttl unit="days">1</ttl>
         </expiry>
         <resources>
-            <heap unit="entries">50</heap>
+            <heap unit="entries">10</heap>
         </resources>
     </cache>
 
+    <!--
     <cache alias="player_token">
         <key-type>java.lang.String</key-type>
         <value-type>com.educational.pojo.resp.player.PlayerTokenResp</value-type>

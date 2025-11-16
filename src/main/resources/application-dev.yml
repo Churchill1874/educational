@@ -18,11 +18,11 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://129.226.172.171:3306/educational?serverTimezone=Asia/Shanghai&useUnicode=true&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://43.165.187.194:3306/educational?serverTimezone=Asia/Shanghai&useUnicode=true&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true&useSSL=false
     #url: jdbc:mysql://127.00.0.1:3306/educational?serverTimezone=Asia/Shanghai&useUnicode=true&zeroDateTimeBehavior=convertToNull&allowPublicKeyRetrieval=true&useSSL=false
     username: root
     #password: 123456
-    password: 3.141592653589793#Zz-^T[
+    password: Aa123456!
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       stat-view-servlet:

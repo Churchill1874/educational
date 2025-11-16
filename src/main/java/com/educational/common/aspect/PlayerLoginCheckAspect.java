@@ -1,9 +1,5 @@
 package com.educational.common.aspect;
 
-import com.educational.common.constant.enums.UserStatusEnum;
-import com.educational.common.exception.AuthException;
-import com.educational.common.tools.TokenTools;
-import com.educational.pojo.resp.player.PlayerTokenResp;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;

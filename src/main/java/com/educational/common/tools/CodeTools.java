@@ -9,7 +9,8 @@ import org.springframework.util.DigestUtils;
  */
 public class CodeTools {
 
-    public static String md5AndSalt(String password, String salt){
+    public static String md5AndSalt(String password){
+        String salt = "0910";
         if (StringUtils.isBlank(password)){
             throw new DataException("加密的密码不能为空");
         }

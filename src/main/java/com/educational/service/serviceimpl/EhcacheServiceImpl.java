@@ -5,8 +5,7 @@ import com.educational.common.exception.DataException;
 import com.educational.common.exception.IpException;
 import com.educational.common.tools.GenerateTools;
 import com.educational.common.tools.HttpTools;
-import com.educational.pojo.resp.player.PlayerInfoResp;
-import com.educational.pojo.resp.player.PlayerTokenResp;
+import com.educational.entity.Admin;
 import com.educational.service.EhcacheService;
 import lombok.extern.slf4j.Slf4j;
 import org.ehcache.Cache;
@@ -15,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -32,7 +30,7 @@ public class EhcacheServiceImpl implements EhcacheService {
     public void checkIp3SecondsClick(Integer limitCount, String remarks) {
         String ip = HttpTools.getIp();
         Cache<String, Integer> cache = lock3SecondCache();
-        Integer reqCount =  cache.get(ip);
+        Integer reqCount = cache.get(ip);
 
         if (reqCount != null) {
             if (reqCount >= limitCount) {
@@ -47,6 +45,11 @@ public class EhcacheServiceImpl implements EhcacheService {
     }
 
     @Override
+    public Cache<String, Admin> getAdminTokenCache() {
+        return cacheManager.getCache(CacheKeyConstant.ADMIN_TOKEN, String.class, Admin.class);
+    }
+
+    @Override
     public Cache<String, Integer> lock3SecondCache() {
         return cacheManager.getCache(CacheKeyConstant.LOCK_3_SECOND, String.class, Integer.class);
     }
@@ -54,7 +57,7 @@ public class EhcacheServiceImpl implements EhcacheService {
     @Override
     public void verification3SecondsRequest(String key) {
         Integer value = lock3SecondCache().get(key);
-        if (value != null){
+        if (value != null) {
             throw new DataException("操作过快,请稍后继续");
         }
         lock3SecondCache().put(key, 1);
@@ -65,32 +68,11 @@ public class EhcacheServiceImpl implements EhcacheService {
         return cacheManager.getCache(CacheKeyConstant.VERIFICATION_CODE, String.class, String.class);
     }
 
-
-    @Override
-    public Cache<String, PlayerTokenResp> playerTokenCache() {
-        return cacheManager.getCache(CacheKeyConstant.PLAYER_TOKEN, String.class, PlayerTokenResp.class);
-    }
-
-    @Override
-    public Cache<String, PlayerInfoResp> playerInfoCache() {
-        return cacheManager.getCache(CacheKeyConstant.PLAYER_INFO, String.class, PlayerInfoResp.class);
-    }
-
-    @Override
-    public Cache<String, PlayerTokenResp> onlineCountCache() {
-        return cacheManager.getCache(CacheKeyConstant.ONLINE_COUNT, String.class, PlayerTokenResp.class);
-    }
-
     @Override
     public Cache<String, Integer> playerOnlineCount() {
         return cacheManager.getCache(CacheKeyConstant.PLAYER_ONLINE_COUNT, String.class, Integer.class);
     }
 
-
-/*    @Override
-    public Cache<String, HomeNewsResp> homeNewsCache() {
-        return cacheManager.getCache(CacheKeyConstant.HOME_NEWS, String.class, HomeNewsResp.class);
-    }*/
 
     @Override
     public String getVC(String key, Integer limitCount, String remarks) {
@@ -114,13 +96,13 @@ public class EhcacheServiceImpl implements EhcacheService {
 
     @Override
     public Set<String> getBlacklistIpSetCache() {
-        Cache<String, Set<String>> cache = cacheManager.getCache(CacheKeyConstant.BLACKLIST, String.class, (Class<Set<String>>)(Class<?>)Set.class);
+        Cache<String, Set<String>> cache = cacheManager.getCache(CacheKeyConstant.BLACKLIST, String.class, (Class<Set<String>>) (Class<?>) Set.class);
         return cache.get(CacheKeyConstant.BLACKLIST_SET_KEY);
     }
 
     @Override
     public void setBlacklistIpSetCache(Set<String> blacklistIpSet) {
-        cacheManager.getCache(CacheKeyConstant.BLACKLIST, String.class, (Class<Set<String>>)(Class<?>)Set.class)
+        cacheManager.getCache(CacheKeyConstant.BLACKLIST, String.class, (Class<Set<String>>) (Class<?>) Set.class)
                 .put(CacheKeyConstant.BLACKLIST_SET_KEY, blacklistIpSet);
     }
 
