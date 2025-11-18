@@ -2,7 +2,11 @@ package com.educational.common.tools;
 
 import cn.hutool.core.util.RandomUtil;
 import com.educational.common.constant.CacheKeyConstant;
+import com.educational.common.exception.TokenException;
+import com.educational.entity.Admin;
+import com.educational.service.AdminService;
 import com.educational.service.EhcacheService;
+import org.apache.commons.lang3.StringUtils;
 import org.ehcache.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +24,32 @@ public class TokenTools {
     @Autowired
     public void setEhcacheService(EhcacheService ehcacheService) {
         TokenTools.ehcacheService = ehcacheService;
+    }
+
+    @Autowired
+    private AdminService adminService;
+
+    /**
+     * 获取管理员登录信息
+     *
+     * @return
+     */
+    public static Admin getPlayerToken(boolean needCheck) {
+        String headerToken = HttpTools.getHeaderToken();
+        if (StringUtils.isBlank(headerToken)) {
+            //如果要求在请求头里的token-id不能为空 要校验令牌
+            if (needCheck) {
+                throw new TokenException();
+            } else {
+                return null;
+            }
+        }
+
+        Admin playerTokenResp = ehcacheService.getAdminTokenCache().get(headerToken);
+        if (needCheck && playerTokenResp == null) {
+            throw new TokenException();
+        }
+        return playerTokenResp;
     }
 
 
