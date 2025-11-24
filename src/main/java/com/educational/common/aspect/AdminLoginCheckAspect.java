@@ -1,5 +1,8 @@
 package com.educational.common.aspect;
 
+import com.educational.common.exception.AuthException;
+import com.educational.common.tools.TokenTools;
+import com.educational.entity.Admin;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,6 +23,10 @@ public class AdminLoginCheckAspect {
 
     @Before("adminLoginCheck()")
     public void beforeCut(JoinPoint joinPoint) {
+        Admin admin = TokenTools.getAdminToken(true);
+        if (admin.getStatus() == null || !admin.getStatus()) {
+            throw new AuthException();
+        }
     }
 
 /*    @After("loginCheck()")

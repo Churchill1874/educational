@@ -34,7 +34,7 @@ public class TokenTools {
      *
      * @return
      */
-    public static Admin getPlayerToken(boolean needCheck) {
+    public static Admin getAdminToken(boolean needCheck) {
         String headerToken = HttpTools.getHeaderToken();
         if (StringUtils.isBlank(headerToken)) {
             //如果要求在请求头里的token-id不能为空 要校验令牌
@@ -45,46 +45,12 @@ public class TokenTools {
             }
         }
 
-        Admin playerTokenResp = ehcacheService.getAdminTokenCache().get(headerToken);
-        if (needCheck && playerTokenResp == null) {
+        Admin admin = ehcacheService.getAdminTokenCache().get(headerToken);
+        if (needCheck && admin == null) {
             throw new TokenException();
         }
-        return playerTokenResp;
+        return admin;
     }
-
-
-
-
-    /**
-     * 获取管理员登录信息
-     *
-     * @return
-     */
-/*
-    public static PlayerTokenResp getPlayerToken(boolean needCheck) {
-        String headerToken = HttpTools.getHeaderToken();
-        if (StringUtils.isBlank(headerToken)) {
-            //如果要求在请求头里的token-id不能为空 要校验令牌
-            if (needCheck) {
-                throw new TokenException();
-            } else {
-                return null;
-            }
-        }
-
-        PlayerTokenResp playerTokenResp = ehcacheService.playerTokenCache().get(headerToken);
-        if (needCheck && playerTokenResp == null) {
-
-            playerTokenResp = playerHelper.checkAndUpdate(headerToken);
-            if (playerTokenResp != null){
-                return playerTokenResp;
-            } else {
-                throw new TokenException();
-            }
-        }
-        return playerTokenResp;
-    }
-*/
 
     /**
      * 获取当前在线人数 随机生成
