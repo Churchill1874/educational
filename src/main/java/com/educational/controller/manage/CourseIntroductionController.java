@@ -48,7 +48,7 @@ public class CourseIntroductionController {
 
 
     @PostMapping("/updateCourseIntroduction")
-    @ApiOperation(value = "添加课程介绍", notes = "添加课程介绍")
+    @ApiOperation(value = "修改课程介绍", notes = "修改课程介绍")
     //@AdminLoginCheck
     public R updateCourseIntroduction(@RequestBody @Valid CourseIntroductionUpdate req) {
         courseIntroductionService.updateCourseIntroduction(BeanUtil.toBean(req, CourseIntroduction.class));
