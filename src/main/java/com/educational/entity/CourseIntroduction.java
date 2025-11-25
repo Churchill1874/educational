@@ -14,7 +14,7 @@ public class CourseIntroduction extends BaseInfo {
     private String level;
 
     @ApiModelProperty("技术课程类型")
-    private String backend;
+    private String category;
 
     @ApiModelProperty("课程标题")
     private String title;
