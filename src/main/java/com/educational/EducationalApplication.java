@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching //开启缓存
 @EnableScheduling //开启定时任务
 @SpringBootApplication
-@MapperScan("com.educational")
+@MapperScan("com.educational.mapper")
 public class EducationalApplication {
 
     public static void main(String[] args) {
