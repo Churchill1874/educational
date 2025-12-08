@@ -18,4 +18,7 @@ public class Visitors extends BaseInfo implements Serializable {
     @ApiModelProperty("地址")
     private String address;
 
+    @ApiModelProperty("浏览器指纹")
+    private String userAgent;
+
 }
