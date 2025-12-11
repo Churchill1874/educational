@@ -5,6 +5,7 @@ import com.educational.common.tools.HttpTools;
 import com.educational.entity.CourseIntroduction;
 import com.educational.pojo.resp.verification.VerificationCodeResp;
 import com.educational.service.CourseIntroductionService;
+import com.educational.service.VisitorsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -23,12 +24,13 @@ public class CourseIntroductionApi {
 
     @Autowired
     private CourseIntroductionService courseIntroductionService;
+    @Autowired
+    private VisitorsService visitorsService;
 
     @PostMapping("/list")
     @ApiOperation(value = "课程介绍", notes = "课程介绍")
     public R<List<CourseIntroduction>> getList() {
-        String ip = HttpTools.getIp();
-        log.info("ip:{}请求图片验证码", ip);
+        visitorsService.insert();
         return R.ok(courseIntroductionService.getList());
     }
 

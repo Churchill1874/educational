@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.api.R;
 import com.educational.entity.Visitors;
 import com.educational.pojo.req.PageBase;
+import com.educational.pojo.resp.visitors.VisitorsStatisticsResp;
 import com.educational.service.VisitorsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,12 @@ public class VisitorsController {
     @ApiOperation(value = "分页查询", notes = "分页查询")
     public R<IPage<Visitors>> page(@RequestBody PageBase dto) {
         return R.ok(visitorsService.page(dto));
+    }
+
+    @PostMapping("/statistics")
+    @ApiOperation(value = "访客访问统计数据", notes = "访客访问统计数据")
+    public R<VisitorsStatisticsResp> statistics() {
+        return R.ok(visitorsService.statistics());
     }
 
 

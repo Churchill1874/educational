@@ -83,4 +83,16 @@
         </resources>
     </cache>
 
+    <cache alias="course_introduction">
+        <key-type>java.lang.String</key-type>
+        <value-type>java.util.List</value-type>
+        <expiry>
+            <ttl unit="seconds">3600</ttl>
+        </expiry>
+        <resources>
+            <heap unit="entries">1</heap>
+        </resources>
+    </cache>
+
+
 </config>
