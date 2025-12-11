@@ -14,7 +14,7 @@ public interface VisitorsService extends IService<Visitors> {
 
     void insert(String ip, String address);
 
-    List<Visitors> findByIpLastMinutes(String ip, int minutes);
+    List<Visitors> findByIpToday(String ip);
 
     VisitorsStatisticsResp statistics();
 

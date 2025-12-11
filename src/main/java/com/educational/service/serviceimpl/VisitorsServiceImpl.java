@@ -36,8 +36,8 @@ public class VisitorsServiceImpl extends ServiceImpl<VisitorsMapper, Visitors> i
     @Async
     @Override
     public void insert(String ip, String address) {
-        //最近十分钟之内如果已经访问过的ip 则不再次记录
-        if(!CollectionUtils.isEmpty(findByIpLastMinutes(ip,10))){
+        //当天访问过的ip 则不再次记录
+        if(!CollectionUtils.isEmpty(findByIpToday(ip))){
             return;
         }
 
@@ -50,13 +50,15 @@ public class VisitorsServiceImpl extends ServiceImpl<VisitorsMapper, Visitors> i
     }
 
     @Override
-    public List<Visitors> findByIpLastMinutes(String ip, int minutes) {
+    public List<Visitors> findByIpToday(String ip) {
+        LocalDateTime now = LocalDateTime.now();
         QueryWrapper<Visitors> queryWrapper = new QueryWrapper<>();
         queryWrapper
                 .lambda()
                 .select(Visitors::getCreateTime)
                 .eq(Visitors::getIp, ip)
-                .ge(Visitors::getCreateTime, LocalDateTime.now().minusMinutes(minutes));
+                .ge(Visitors::getCreateTime, now.toLocalDate().atStartOfDay())
+                .le(Visitors::getCreateTime, now);
         return list(queryWrapper);
     }
 
