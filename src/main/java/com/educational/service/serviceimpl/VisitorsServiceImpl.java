@@ -35,9 +35,7 @@ public class VisitorsServiceImpl extends ServiceImpl<VisitorsMapper, Visitors> i
 
     @Async
     @Override
-    public void insert() {
-        String ip = HttpTools.getIp();
-
+    public void insert(String ip, String address) {
         //最近十分钟之内如果已经访问过的ip 则不再次记录
         if(!CollectionUtils.isEmpty(findByIpLastMinutes(ip,10))){
             return;
@@ -47,7 +45,7 @@ public class VisitorsServiceImpl extends ServiceImpl<VisitorsMapper, Visitors> i
         visitors.setCreateTime(LocalDateTime.now());
         visitors.setCreateName("访客");
         visitors.setIp(ip);
-        visitors.setAddress(HttpTools.getAddress());
+        visitors.setAddress(address);
         save(visitors);
     }
 

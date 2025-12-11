@@ -12,7 +12,7 @@ public interface VisitorsService extends IService<Visitors> {
 
     IPage<Visitors> page(PageBase req);
 
-    void insert();
+    void insert(String ip, String address);
 
     List<Visitors> findByIpLastMinutes(String ip, int minutes);
 
