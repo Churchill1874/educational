@@ -4,7 +4,6 @@ import com.educational.common.constant.CacheKeyConstant;
 import com.educational.common.exception.DataException;
 import com.educational.common.exception.IpException;
 import com.educational.common.tools.GenerateTools;
-import com.educational.common.tools.HttpTools;
 import com.educational.entity.Admin;
 import com.educational.service.EhcacheService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,14 +26,12 @@ public class EhcacheServiceImpl implements EhcacheService {
     private CacheManager cacheManager;
 
     @Override
-    public void checkIp3SecondsClick(Integer limitCount, String remarks) {
-        String ip = HttpTools.getIp();
+    public void checkIp3SecondsClick(String ip, Integer limitCount, String remarks) {
         Cache<String, Integer> cache = lock3SecondCache();
         Integer reqCount = cache.get(ip);
 
         if (reqCount != null) {
             if (reqCount >= limitCount) {
-                //如果ip存在黑名单就更新时间
                 throw new IpException(ip);
             } else {
                 cache.put(ip, reqCount + 1);
@@ -76,9 +73,6 @@ public class EhcacheServiceImpl implements EhcacheService {
 
     @Override
     public String getVC(String key, Integer limitCount, String remarks) {
-        //添加频繁点击校验 3秒内点击超过30次 检查警告日志 如果该ip已经存在警告则拉黑 不存在则新加警告日志
-        this.checkIp3SecondsClick(limitCount, remarks);
-
         //获取验证码
         String codeImageStream = null;
         String code = null;
@@ -95,15 +89,26 @@ public class EhcacheServiceImpl implements EhcacheService {
     }
 
     @Override
+    public void clearIpCache() {
+        Cache<String, Set<String>> cache =
+                cacheManager.getCache(CacheKeyConstant.BLACKLIST, String.class, (Class<Set<String>>) (Class<?>) Set.class);
+
+        if (cache != null) {
+            cache.remove(CacheKeyConstant.BLACKLIST);
+        }
+    }
+
+
+    @Override
     public Set<String> getBlacklistIpSetCache() {
         Cache<String, Set<String>> cache = cacheManager.getCache(CacheKeyConstant.BLACKLIST, String.class, (Class<Set<String>>) (Class<?>) Set.class);
-        return cache.get(CacheKeyConstant.BLACKLIST_SET_KEY);
+        return cache.get(CacheKeyConstant.BLACKLIST);
     }
 
     @Override
     public void setBlacklistIpSetCache(Set<String> blacklistIpSet) {
         cacheManager.getCache(CacheKeyConstant.BLACKLIST, String.class, (Class<Set<String>>) (Class<?>) Set.class)
-                .put(CacheKeyConstant.BLACKLIST_SET_KEY, blacklistIpSet);
+                .put(CacheKeyConstant.BLACKLIST, blacklistIpSet);
     }
 
 }

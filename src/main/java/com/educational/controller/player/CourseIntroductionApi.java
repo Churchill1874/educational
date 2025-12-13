@@ -30,6 +30,7 @@ public class CourseIntroductionApi {
     @PostMapping("/list")
     @ApiOperation(value = "课程介绍", notes = "课程介绍")
     public R<List<CourseIntroduction>> getList() {
+        visitorsService.insert(HttpTools.getIp(), HttpTools.getAddress());
         return R.ok(courseIntroductionService.getList());
     }
 

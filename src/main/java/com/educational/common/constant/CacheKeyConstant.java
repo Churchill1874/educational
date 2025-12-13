@@ -45,8 +45,6 @@ public interface CacheKeyConstant {
      */
     String BLACKLIST = "blacklist";
 
-    String BLACKLIST_SET_KEY = "blacklist_set_key";
-
     /**
      * 重复冲求校验
      */

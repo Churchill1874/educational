@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 @Api(tags = "访客")
 @RequestMapping("/player/visitors")
 public class VisitorsApi {
+/*
 
     @Resource
     private VisitorsService visitorsService;
@@ -27,6 +28,7 @@ public class VisitorsApi {
         visitorsService.insert(HttpTools.getIp(), HttpTools.getAddress());
         return R.ok(null);
     }
+*/
 
 
 }

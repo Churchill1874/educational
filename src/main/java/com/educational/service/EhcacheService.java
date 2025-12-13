@@ -29,7 +29,6 @@ public interface EhcacheService {
      */
     void verification3SecondsRequest(String key);
 
-
     /**
      * 获取验证码缓存容器
      * @return
@@ -41,13 +40,6 @@ public interface EhcacheService {
      * @return
      */
     Cache<String, Integer> playerOnlineCount();
-
-    /**
-     * 首页新闻
-     * @return
-     */
-    //Cache<String, HomeNewsResp> homeNewsCache();
-
 
     /**
      * 获取验证码 并设置每3秒的限制请求次数 和提示语
@@ -63,7 +55,12 @@ public interface EhcacheService {
      * @param limitCount
      * @return
      */
-    void checkIp3SecondsClick(Integer limitCount, String remarks);
+    void checkIp3SecondsClick(String ip,Integer limitCount, String remarks);
+
+    /**
+     * 清理ip黑名单缓存
+     */
+    void clearIpCache();
 
     /**
      * 获取黑名单ip集合set
