@@ -14,8 +14,7 @@ import com.educational.pojo.req.blacklist.BlacklistPageReq;
 import com.educational.service.BlacklistService;
 import com.educational.service.EhcacheService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -29,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 public class BlacklistServiceImpl extends ServiceImpl<BlacklistMapper, Blacklist> implements BlacklistService {
 
+    @Autowired
     private EhcacheService ehcacheService;
 
     @Override
@@ -80,8 +80,8 @@ public class BlacklistServiceImpl extends ServiceImpl<BlacklistMapper, Blacklist
     @Override
     public void checkIp(String ip) {
         try {
-            ehcacheService.checkIp3SecondsClick(ip,30, "ip暴力访问:" + ip);
-        } catch (IpException e){
+            ehcacheService.checkIp3SecondsClick(ip, 30, "ip暴力访问:" + ip);
+        } catch (IpException e) {
             Blacklist blacklist = new Blacklist();
             blacklist.setIp(ip);
             blacklist.setAddress(HttpTools.getAddress());
