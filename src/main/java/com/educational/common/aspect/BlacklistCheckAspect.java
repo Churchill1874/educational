@@ -20,13 +20,21 @@ public class BlacklistCheckAspect {
     @Autowired
     private BlacklistService blacklistService;
 
-    @Pointcut("execution(* com.educational.controller.manage.*.*(..))")
+    //校验controller下面的前台和后台接口
+    @Pointcut("execution(* com.educational.controller..*.*(..))")
     public void blacklistPointCut() {
     }
 
     @Before("blacklistPointCut()")
     public void beforeExecute() {
         String ip = HttpTools.getIp();
+        if ("127.0.0.1".equals(ip) || "::1".equals(ip)) {
+            return;
+        }
+        if ("OPTIONS".equalsIgnoreCase(HttpTools.getRequest().getMethod())) {
+            return;
+        }
+
         Set<String> blacklistIpSet = blacklistService.getBlacklistIpAll();
         if (blacklistIpSet.contains(ip)) {
             log.error("黑名单ip访问了:{}", ip);

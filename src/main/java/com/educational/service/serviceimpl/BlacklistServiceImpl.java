@@ -90,6 +90,8 @@ public class BlacklistServiceImpl extends ServiceImpl<BlacklistMapper, Blacklist
             blacklist.setCreateTime(LocalDateTime.now());
             save(blacklist);
             ehcacheService.clearIpCache();
+
+            throw e;
         }
     }
 
