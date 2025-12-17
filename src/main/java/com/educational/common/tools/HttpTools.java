@@ -92,43 +92,22 @@ public class HttpTools {
      */
     public static String getIp() {
         HttpServletRequest request = getRequest();
-        String ip = null;
-        //X-Forwarded-For：Squid 服务代理
-        String ipAddresses = request.getHeader("X-Forwarded-For");
-        String unknown = "unknown";
-        if (ipAddresses == null || ipAddresses.length() == 0 || unknown.equalsIgnoreCase(ipAddresses)) {
-            //Proxy-Client-IP：apache 服务代理
-            ipAddresses = request.getHeader("Proxy-Client-IP");
+
+        // 1️⃣ 优先从 X-Forwarded-For 取（只取第一个）
+        String xff = request.getHeader("X-Forwarded-For");
+        if (xff != null && xff.length() > 0 && !"unknown".equalsIgnoreCase(xff)) {
+            return xff.split(",")[0].trim();
         }
-        if (ipAddresses == null || ipAddresses.length() == 0 || unknown.equalsIgnoreCase(ipAddresses)) {
-            //WL-Proxy-Client-IP：weblogic 服务代理
-            ipAddresses = request.getHeader("WL-Proxy-Client-IP");
+
+        // 2️⃣ 再取 X-Real-IP
+        String realIp = request.getHeader("X-Real-IP");
+        if (realIp != null && realIp.length() > 0 && !"unknown".equalsIgnoreCase(realIp)) {
+            return realIp;
         }
-        if (ipAddresses == null || ipAddresses.length() == 0 || unknown.equalsIgnoreCase(ipAddresses)) {
-            //HTTP_CLIENT_IP：有些代理服务器
-            ipAddresses = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ipAddresses == null || ipAddresses.length() == 0 || unknown.equalsIgnoreCase(ipAddresses)) {
-            //X-Real-IP：nginx服务代理
-            ipAddresses = request.getHeader("X-Real-IP");
-        }
-        if (ipAddresses == null || ipAddresses.length() == 0 || unknown.equalsIgnoreCase(ipAddresses)) {
-            ipAddresses = request.getRemoteAddr();
-            if ("127.0.0.1".equals(ipAddresses) || "0:0:0:0:0:0:0:1".equals(ipAddresses)) {
-                //根据网卡取本机配置的IP
-                InetAddress inet = null;
-                try {
-                    inet = InetAddress.getLocalHost();
-                } catch (UnknownHostException e) {
-                    log.error("获取local host信息异常:{}", e.getMessage());
-                }
-                ipAddresses = inet.getHostAddress();
-            }
-        }
-        if (ipAddresses != null && ipAddresses.length() != 0) {
-            ip = ipAddresses.split(",")[0];
-        }
-        return ip;
+
+        // 3️⃣ 最后兜底 RemoteAddr
+        return request.getRemoteAddr();
     }
+
 
 }

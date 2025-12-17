@@ -11,6 +11,7 @@ import com.educational.mapper.VisitorsMapper;
 import com.educational.pojo.req.PageBase;
 import com.educational.pojo.resp.visitors.VisitorsStatisticsResp;
 import com.educational.service.VisitorsService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -19,7 +20,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
-
+@Slf4j
 @Service
 public class VisitorsServiceImpl extends ServiceImpl<VisitorsMapper, Visitors> implements VisitorsService {
 
@@ -36,6 +37,7 @@ public class VisitorsServiceImpl extends ServiceImpl<VisitorsMapper, Visitors> i
     @Async
     @Override
     public void insert(String ip, String address) {
+        log.info("将要插入访客记录的ip是:{}-{}",ip,address);
         //当天访问过的ip 则不再次记录
         if(!CollectionUtils.isEmpty(findByIpToday(ip))){
             return;
