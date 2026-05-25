@@ -11,6 +11,9 @@ import java.io.Serializable;
 public class CourseIntroductionAdd implements Serializable {
     private static final long serialVersionUID = 5886535927455187432L;
 
+    @ApiModelProperty("技术课程类型")
+    private String category;
+
     @ApiModelProperty("标签 比如 初级到高级/0基础入门/中级到高级")
     private String level;
 
